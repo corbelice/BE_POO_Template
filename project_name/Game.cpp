@@ -71,6 +71,13 @@ void Game::update(unsigned long currentTime) {
         spaceship.getTemperature() + temperatureVariation * deltaSeconds
     );
 
+    // Damage the spaceship during critical overheating.
+if (spaceship.getTemperature() >= criticalThreshold) {
+    spaceship.setIntegrity(
+        spaceship.getIntegrity() - integrityLossRate * deltaSeconds
+    );
+}
+
     // Stop the game when the time limit is reached.
     if (elapsedTime >= duration) {
         stop();

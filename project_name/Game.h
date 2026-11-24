@@ -28,11 +28,14 @@ private:
     // Temperature threshold for triggering an overheating alarm.
     const float overheatThreshold = 70.0f;
 
-// Temperature threshold for damaging the spaceship.
+    // Temperature threshold for damaging the spaceship.
     const float criticalThreshold = 90.0f;  
 
     // Time of the previous game update.
     unsigned long lastUpdateTime;
+
+    // Integrity loss per second during critical overheating.
+    const float integrityLossRate = 2.0f;
 
 public:
 

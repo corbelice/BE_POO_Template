@@ -40,6 +40,8 @@ private:
     // Current reactor power (0 to 100%).
     float ReactorPower;
 
+    // Indicates whether an electrical failure is active.
+    bool electricalFailure;
 
 public:
 
@@ -68,6 +70,8 @@ public:
     float getOxygen() const;
     float getIntegrity() const;
     float getReactorPower() const;
+    // Returns whether an electrical failure is active.
+    bool hasElectricalFailure() const;
     
 
 
@@ -104,6 +108,9 @@ public:
     // Returns false if a critical resource is depleted.
 
     bool isOperational() const;
+
+    void triggerElectricalFailure();
+    void repairElectricalFailure();
 
 };
 

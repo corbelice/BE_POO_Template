@@ -19,8 +19,6 @@
 Spaceship::Spaceship() {
     reset();
 }
-
-
 // ==========================================
 // GETTERS
 // ==========================================
@@ -49,8 +47,10 @@ float Spaceship::getIntegrity() const {
 float Spaceship::getReactorPower() const {
     return ReactorPower;
 }
-
-
+// Returns whether an electrical failure is active.
+bool Spaceship::hasElectricalFailure() const {
+    return electricalFailure;
+}
 // ==========================================
 // SETTERS
 // ==========================================
@@ -73,7 +73,6 @@ void Spaceship::setEnergy(float value) {
     }
 }
 
-
 // Temperature is expressed in degrees Celsius,
 // not as a percentage.
 //
@@ -93,7 +92,6 @@ void Spaceship::setTemperature(float value) {
     }
 }
 
-
 // Oxygen must always remain between 0 and 100%.
 //
 // This prevents negative oxygen levels or values
@@ -111,7 +109,6 @@ void Spaceship::setOxygen(float value) {
         oxygen = value;
     }
 }
-
 
 // Hull integrity must always remain between 0 and 100%.
 //
@@ -142,6 +139,16 @@ void Spaceship::setReactorPower(float value) {
     }
 }
 
+// Triggers an electrical failure.
+void Spaceship::triggerElectricalFailure() {
+    electricalFailure = true;
+}
+
+// Repairs the electrical failure.
+void Spaceship::repairElectricalFailure() {
+    electricalFailure = false;
+}
+
 // ==========================================
 // RESET
 // ==========================================
@@ -161,7 +168,9 @@ void Spaceship::reset() {
     oxygen = 100;
     integrity = 100;
     ReactorPower = 50;
+    electricalFailure = false;
 }
+
 
 
 // ==========================================

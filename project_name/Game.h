@@ -38,7 +38,6 @@ private:
     const float integrityLossRate = 2.0f;
 
 public:
-
     // Constructor.
     Game();
 

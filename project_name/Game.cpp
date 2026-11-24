@@ -17,6 +17,7 @@ Game::Game() : running(false),
 // Starts a new game and resets the timer.
 
 void Game::start(unsigned long currentTime) {
+
     spaceship.reset();
     running = true;
     startTime = currentTime;
@@ -54,14 +55,29 @@ void Game::update(unsigned long currentTime) {
     // Store the current time for the next update.
     lastUpdateTime = currentTime;
 
+
+    // ==========================================
+    // ENERGY MANAGEMENT
+    // ==========================================
+
     // Calculate the energy produced per second by the reactor.
     float energyProduction = spaceship.getReactorPower() / 100.0f;
+
+    // Disable energy production during an electrical failure.
+    if (spaceship.hasElectricalFailure()) {
+        energyProduction = 0.0f;
+    }
 
     // Calculate and update the spaceship energy.
     spaceship.setEnergy(
         spaceship.getEnergy()
         + (energyProduction - energyConsumption) * deltaSeconds
     );
+
+
+    // ==========================================
+    // TEMPERATURE MANAGEMENT
+    // ==========================================
 
     // Calculate the temperature variation per second.
     float temperatureVariation = 0.02f * spaceship.getReactorPower() - 1.0f;
@@ -71,12 +87,22 @@ void Game::update(unsigned long currentTime) {
         spaceship.getTemperature() + temperatureVariation * deltaSeconds
     );
 
+
+    // ==========================================
+    // INTEGRITY MANAGEMENT
+    // ==========================================
+
     // Damage the spaceship during critical overheating.
-if (spaceship.getTemperature() >= criticalThreshold) {
-    spaceship.setIntegrity(
-        spaceship.getIntegrity() - integrityLossRate * deltaSeconds
-    );
-}
+    if (spaceship.getTemperature() >= criticalThreshold) {
+        spaceship.setIntegrity(
+            spaceship.getIntegrity() - integrityLossRate * deltaSeconds
+        );
+    }
+
+
+    // ==========================================
+    // END OF THE GAME
+    // ==========================================
 
     // Stop the game when the time limit is reached.
     if (elapsedTime >= duration) {
@@ -91,6 +117,7 @@ void Game::stop() {
 
     running = false;
 }
+
 
 // ==========================================
 // GETTERS
@@ -111,10 +138,14 @@ unsigned long Game::getRemainingTime() const {
     return duration - elapsedTime;
 }
 
+
 // Returns whether the reactor is overheating.
+
 bool Game::isOverheating() const {
+
     return spaceship.getTemperature() >= overheatThreshold;
 }
+
 
 // Returns a reference to the original spaceship.
 

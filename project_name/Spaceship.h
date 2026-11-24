@@ -37,6 +37,9 @@ private:
     // Structural integrity of the spaceship (0 to 100%).
     float integrity;
 
+    // Current reactor power (0 to 100%).
+    float ReactorPower;
+
 
 public:
 
@@ -64,6 +67,8 @@ public:
     float getTemperature() const;
     float getOxygen() const;
     float getIntegrity() const;
+    float getReactorPower() const;
+    
 
 
     // ==========================================
@@ -80,6 +85,7 @@ public:
     void setTemperature(float value);
     void setOxygen(float value);
     void setIntegrity(float value);
+    void setReactorPower(float value);
 
 
     // ==========================================

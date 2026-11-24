@@ -15,9 +15,6 @@
 //
 // reset() initializes all spaceship parameters
 // with their default values.
-//
-// "::" is the scope resolution operator.
-// It indicates that this method belongs to Spaceship.
 
 Spaceship::Spaceship() {
     reset();
@@ -47,6 +44,10 @@ float Spaceship::getOxygen() const {
 
 float Spaceship::getIntegrity() const {
     return integrity;
+}
+
+float Spaceship::getReactorPower() const {
+    return ReactorPower;
 }
 
 
@@ -129,6 +130,17 @@ void Spaceship::setIntegrity(float value) {
     }
 }
 
+void Spaceship::setReactorPower(float value) {
+    if (value < 0) {
+        ReactorPower = 0;
+    }
+    else if (value > 100) {
+        ReactorPower = 100;
+    }
+    else {
+        ReactorPower = value;
+    }
+}
 
 // ==========================================
 // RESET
@@ -148,6 +160,7 @@ void Spaceship::reset() {
     temperature = 25;
     oxygen = 100;
     integrity = 100;
+    ReactorPower = 50;
 }
 
 
@@ -155,19 +168,10 @@ void Spaceship::reset() {
 // OPERATIONAL STATUS
 // ==========================================
 
-// The spaceship remains operational as long as
-// its three critical resources are above zero.
-//
-// "&&" is the logical AND operator.
-// All conditions must be true for the method
-// to return true.
-//
-// Prolonged overheating will be managed separately
-// by the Game class because it depends on time.
-
 bool Spaceship::isOperational() const {
 
     return (energy > 0 &&
             oxygen > 0 &&
             integrity > 0);
 }
+

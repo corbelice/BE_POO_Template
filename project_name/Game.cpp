@@ -10,7 +10,6 @@ Game::Game() : running(false),
                lastUpdateTime(0) {
 }
 
-
 // ==========================================
 // GAME CONTROL
 // ==========================================
@@ -55,9 +54,21 @@ void Game::update(unsigned long currentTime) {
     // Store the current time for the next update.
     lastUpdateTime = currentTime;
 
+    // Calculate the energy produced per second by the reactor.
+    float energyProduction = spaceship.getReactorPower() / 100.0f;
+
     // Calculate and update the spaceship energy.
     spaceship.setEnergy(
-        spaceship.getEnergy() - energyConsumption * deltaSeconds
+        spaceship.getEnergy()
+        + (energyProduction - energyConsumption) * deltaSeconds
+    );
+
+    // Calculate the temperature variation per second.
+    float temperatureVariation = 0.02f * spaceship.getReactorPower() - 1.0f;
+
+    // Update the reactor temperature.
+    spaceship.setTemperature(
+        spaceship.getTemperature() + temperatureVariation * deltaSeconds
     );
 
     // Stop the game when the time limit is reached.
@@ -73,7 +84,6 @@ void Game::stop() {
 
     running = false;
 }
-
 
 // ==========================================
 // GETTERS
@@ -94,6 +104,10 @@ unsigned long Game::getRemainingTime() const {
     return duration - elapsedTime;
 }
 
+// Returns whether the reactor is overheating.
+bool Game::isOverheating() const {
+    return spaceship.getTemperature() >= overheatThreshold;
+}
 
 // Returns a reference to the original spaceship.
 

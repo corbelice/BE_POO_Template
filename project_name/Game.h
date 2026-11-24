@@ -23,10 +23,16 @@ private:
     unsigned long elapsedTime;
 
     // Energy consumption per second.
-const float energyConsumption = 0.5f;
+    const float energyConsumption = 0.5f;
 
-// Time of the previous game update.
-unsigned long lastUpdateTime;
+    // Temperature threshold for triggering an overheating alarm.
+    const float overheatThreshold = 70.0f;
+
+// Temperature threshold for damaging the spaceship.
+    const float criticalThreshold = 90.0f;  
+
+    // Time of the previous game update.
+    unsigned long lastUpdateTime;
 
 public:
 
@@ -49,6 +55,9 @@ public:
 
     // Returns a reference to the spaceship.
     Spaceship& getSpaceship();
+
+    // Returns whether the reactor is overheating.
+    bool isOverheating() const;
 };
 
 #endif

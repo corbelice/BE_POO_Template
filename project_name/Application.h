@@ -6,6 +6,26 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#ifndef APPLICATION_H_
+#define APPLICATION_H_
+
+#include "PotentiometerSensor.h"
+
+class Application {
+private:
+    PotentiometerSensor pot;
+    unsigned long lastPrintTime;
+
+public:
+    Application();
+    ~Application();
+
+    void init(void);
+    void run(void);
+};
+#endif
+
+
 /**
   * @class Application
   * @brief Classe Application 
